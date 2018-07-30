@@ -1,0 +1,210 @@
+{% load static %}
+<!doctype html>
+
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>EOSCalendar </title>
+	<script src='{% static "codebase/dhtmlxscheduler.js" %}' type="text/javascript" charset="utf-8"></script>
+	<link rel='STYLESHEET' type='text/css' href='{% static "codebase/dhtmlxscheduler_flat.css" %}'>
+
+	<script src="{% static 'codebase/ext/dhtmlxscheduler_recurring.js'  %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'codebase/ext/dhtmlxscheduler_units.js'  %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'codebase/ext/dhtmlxscheduler_year_view.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'codebase/ext/dhtmlxscheduler_timeline.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'codebase/ext/dhtmlxscheduler_tooltip.js' %}" type="text/javascript" charset="utf-8"></script>
+	<link href="{% static 'dist/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" -->
+	<script src="{% static 'codebase/ext/dhtmlxscheduler_minical.js'  %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'codebase/ext/dhtmlxscheduler_key_nav.js'  %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'codebase/ext/dhtmlxscheduler_readonly.js'  %}" type="text/javascript" charset="utf-8"></script>
+
+
+
+	<style type="text/css">
+		html,
+		body {
+			margin: 10px;
+			padding: 10px;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		.dhx_calendar_click {
+			/* background-color: #C2D5FC !important; */
+		}
+	</style>
+
+	<script type="text/javascript" charset="utf-8">
+		function doOnLoad() {
+			dhtmlx.message({
+				text: "<p>Keyboard shortcuts:</p>" +
+					"<b>Global</b>" +
+					"<ul>" +
+					"<li><b>Tab</b> - put focus on scheduler</li>" +
+					"<li><b>Alt + 1,2,3 ...</b> - switch between views</li>" +
+					"<li><b>Ctrl + Right/Left</b> - move to next/previous date</li>" +
+					"<li><b>Ctrl + Up/Down</b> - scroll data area</li>" +
+					"<li><b>e, shift + e</b> - select next/previous event</li>" +
+					"<li><b>Home</b> - show today</li>" +
+					"<li><b>Ctrl + Enter</b> - create new event</li>" +
+					"<li><b>Ctrl + C, Ctrl + X, Ctrl + V </b> - copy/cut/paste event</li>" +
+					"</ul>" +
+					"<b>Time Slot</b>" +
+					"<ul>" +
+					"<li><b>Up/Down/Right/Left</b> - navigate over slots</li>" +
+					"<li><b>Shift + Up/Down/Right/Left</b> - extend time slot</li>" +
+					"<li><b>Enter</b> - add new event at selected time</li>" +
+					"</ul>" +
+					"<b>Events</b>" +
+					"<ul>" +
+					"<li><b>Up/Down/Right/Left</b> - go to timeslot</li>" +
+					"<li><b>Space</b> - click</li>" +
+					"<li><b>Enter</b> - open lightbox</li>" +
+					"</ul>" +
+					"<b>Minicalendar</b>" +
+					"<ul>" +
+					"<li><b>Tab</b> - put focus on minicalendar</li>" +
+					"<li><b>Up/Down/Right/Left</b> - navigate between buttons/cells</li>" +
+					"<li><b>Enter</b> - click button/cell</li>" +
+					"</ul>",
+				expire: -1
+			});
+
+
+			scheduler.config.first_hour = 6;
+			scheduler.config.multi_day = true;
+			scheduler.config.xml_date = "%Y-%m-%d %H:%i";
+
+			scheduler.config.lightbox.sections = [{
+					name: "description",
+					height: 200,
+					map_to: "text",
+					type: "textarea",
+					focus: true
+				},
+				{
+					name: "recurring",
+					type: "recurring",
+					map_to: "rec_type",
+					button: "recurring"
+				},
+				{
+					name: "time",
+					height: 72,
+					type: "time",
+					map_to: "auto"
+				}
+			];
+
+			var sections = [{
+					key: 1,
+					label: "Section A"
+				},
+				{
+					key: 2,
+					label: "Section B"
+				},
+				{
+					key: 3,
+					label: "Section C"
+				},
+				{
+					key: 4,
+					label: "Section D"
+				}
+			];
+			scheduler.locale.labels.unit_tab = "Unit";
+
+			scheduler.locale.labels.timeline_tab = "Timeline";
+			scheduler.createTimelineView({
+				name: "timeline",
+				x_unit: "minute",
+				x_date: "%H:%i",
+				x_step: 30,
+				x_size: 24,
+				x_start: 16,
+				x_length: 48,
+				y_unit: sections,
+				y_property: "section_id",
+				render: "bar"
+			});
+
+			scheduler.init('scheduler_here', new Date(), "year");
+			//console.log(scheduler)
+			var view = scheduler.getState().mode
+			console.log(view)
+			scheduler.load("/evts", "json");
+			{% if request.user.is_authenticated %}
+			var dp = new dataProcessor("/events");
+			dp.init(scheduler);
+			
+			dp.setTransactionMode("REST", true);
+			{% else %}
+			var dp = new dataProcessor("/event");
+			dp.init(scheduler);
+			dp.setTransactionMode("POST", false);
+			{% endif %}
+			var calendar = scheduler.renderCalendar({
+				container: "cal_here",
+				navigation: true,
+				handler: function (date) {
+					scheduler.setCurrentView(date, scheduler._mode);
+				}
+			});
+
+			//var format = scheduler.date.date_to_str("%Y-%m-%d %H:%i");
+
+			scheduler.templates.tooltip_text = function (start, end, event) {
+				//return "<small><b>Event:</b> " + event.text + "</small><br/><b><small>Start date:</small></b> <small>" +
+				//	 start + "</small><br/><b><small>End date:</small></b> <small>" + end +'</small><br><a class="" href=/events/'+ event.id+'><small>View Event</small></a>';
+
+				if (scheduler.getState().mode == "year")
+					return "";
+
+				return '<div class="media">' +
+					'<img class="mr-3" style="height:100px;width:100px;" src="{% static 'img/eosio.jpg' %}" alt="Generic placeholder image">' +
+					'<div class="media-body">' +
+					'<h5 class="mt-0"><small>' + event.text + '<small></h5>' +
+					'<h6><i><small>Cras sit amet nibh libero, in gravida nulla. Nul <br>' +
+					'tempus viverra turpis. Fusce con</small></i></h6>' +
+					'</div></div>'
+				//		return '<div class="card"><img class="card-img-top" style="height:100px;width:520px;" src="{% static 'img/eosio.jpg' %}" alt="Card image cap"><div class="card-body"><h5 class="card-title">Card title</h5> <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p><p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p></div>  </div>'
+
+			};
+			scheduler.tooltip.config.delta_x = 5;
+
+			scheduler.tooltip.config.delta_y = -5;
+			scheduler.linkCalendar(calendar);
+			scheduler.setCurrentView(scheduler._date, scheduler._mode);
+		}
+	</script>
+</head>
+
+
+<body onload="doOnLoad();">
+	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">EOSCalendar</a>
+
+	</nav>
+	<div style='float: left; padding:10px;'>
+		<div id="cal_here" style='width:250px;'></div>
+	</div>
+
+
+	<div id="scheduler_here" class="dhx_cal_container" style='width:auto; height:100%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button btn">&nbsp;</div>
+			<div class="dhx_cal_next_button btn">&nbsp;</div>
+			<div class="dhx_cal_today_button btn"></div>
+			<div class="dhx_cal_date"></div>
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+			<div class="dhx_cal_tab" name="year_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>
+	</div>
+</body>
