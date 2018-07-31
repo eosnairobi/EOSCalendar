@@ -1,4 +1,4 @@
-{% load static %}
+{% load static crispy_forms_tags %}
 <!doctype html>
 
 <head>
@@ -17,9 +17,12 @@
 	<script src="{% static 'codebase/ext/dhtmlxscheduler_minical.js'  %}" type="text/javascript" charset="utf-8"></script>
 	<script src="{% static 'codebase/ext/dhtmlxscheduler_key_nav.js'  %}" type="text/javascript" charset="utf-8"></script>
 	<script src="{% static 'codebase/ext/dhtmlxscheduler_readonly.js'  %}" type="text/javascript" charset="utf-8"></script>
-
-
-
+	<script src="{% static 'codebase/ext/dhtmlxscheduler_readonly.js'  %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'js/jquery.min.js'  %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'dist/js/bootstrap.min.js'  %}" type="text/javascript" charset="utf-8"></script>
+	<link rel='STYLESHEET' type='text/css' href='{% static "dtp/css/bootstrap-datetimepicker.css" %}'>
+	<script src="{% static 'js/moment.min.js'  %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'dtp/js/bootstrap-datetimepicker.js'  %}" type="text/javascript" charset="utf-8"></script>
 	<style type="text/css">
 		html,
 		body {
@@ -36,6 +39,8 @@
 
 	<script type="text/javascript" charset="utf-8">
 		function doOnLoad() {
+			$('.datetimeinput').datetimepicker();
+
 			dhtmlx.message({
 				text: "<p>Keyboard shortcuts:</p>" +
 					"<b>Global</b>" +
@@ -178,14 +183,19 @@
 			scheduler.setCurrentView(scheduler._date, scheduler._mode);
 		}
 	</script>
+	<script type="text/javascript">
+		
+		
+	</script>
 </head>
 
 
 <body onload="doOnLoad();">
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
 		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">EOSCalendar</a>
-
+		<a href="#suggest" data-toggle="modal" class="btn btn-outline-warning btn-xs">Suggest Event</a>
 	</nav>
+	
 	<div style='float: left; padding:10px;'>
 		<div id="cal_here" style='width:250px;'></div>
 	</div>
@@ -205,6 +215,29 @@
 		<div class="dhx_cal_header">
 		</div>
 		<div class="dhx_cal_data">
+		</div>
+	</div>
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="suggest" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<form id='question_form' method="POST" action="" enctype="multipart/form-data"> {% csrf_token %}
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-center">What did we miss?</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+
+					<div id="err"></div>
+
+					{{ form | crispy }}
+
+
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+					<input type="submit" class="btn btn-success" />
+				</div>
+		</form>
 		</div>
 	</div>
 </body>
