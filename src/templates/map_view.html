@@ -34,15 +34,10 @@
 		<a href="#suggest" data-toggle="modal" class="btn btn-outline-warning btn-xs">Suggest Event</a>
 	</nav>
         <div id="map" class="mapping"></div>
-   
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApZ6USTF7ZYFzMLSetXtX6ix7ZJbSBj6&callback=initialize"
+        async defer></script>
 <script>
-        jQuery(function($) {
-            // Asynchronously Load the map API 
-            var script = document.createElement('script');
-            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyApZ6USTF7ZYFzMLSetXtX6ix7ZJbSBj6k&callback=initialize";
-            document.body.appendChild(script);
-        });
-        
+       
         function initialize() {
             var map;
             var bounds = new google.maps.LatLngBounds();
