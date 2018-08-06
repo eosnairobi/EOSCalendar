@@ -40,3 +40,16 @@ def e(request):
     print(datetime(start_date))
     
     return Response('success')
+
+
+@api_view(['GET'])
+def map_data(request):
+    events = Event.objects.all().order_by()
+    response = []
+    for event in events:
+        std = str(event.start_date)
+        end = str(event.end_date)
+        response.append({'id': event.id, 'text': event.text,
+                         'start_date': std[:19], 'end_date': end[:19], 'section_id': event.section_id})
+
+    return Response(response)

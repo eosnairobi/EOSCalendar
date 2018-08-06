@@ -3,7 +3,7 @@
 
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>EOSCalendar </title>
+	<title>EOSCalendar | Alpha  </title>
 	<script src='{% static "codebase/dhtmlxscheduler.js" %}' type="text/javascript" charset="utf-8"></script>
 	<link rel='STYLESHEET' type='text/css' href='{% static "codebase/dhtmlxscheduler_flat.css" %}'>
 
@@ -79,7 +79,7 @@
 			scheduler.config.first_hour = 6;
 			scheduler.config.multi_day = true;
 			scheduler.config.xml_date = "%Y-%m-%d %H:%i";
-
+			
 			scheduler.config.lightbox.sections = [{
 					name: "description",
 					height: 200,
@@ -145,6 +145,7 @@
 			
 			dp.setTransactionMode("REST", true);
 			{% else %}
+			scheduler.config.readonly = true;
 			var dp = new dataProcessor("/event");
 			dp.init(scheduler);
 			dp.setTransactionMode("POST", false);
@@ -192,7 +193,8 @@
 
 <body onload="doOnLoad();">
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">EOSCalendar</a>
+		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{% url 'landing' %}">EOSCalendar </a>
+		<a class="btn btn-primary btn-sm">ALPHA Release</a>
 		<a href="#suggest" data-toggle="modal" class="btn btn-outline-warning btn-xs">Suggest Event</a>
 	</nav>
 	
@@ -222,7 +224,7 @@
 		<form id='question_form' method="POST" action="" enctype="multipart/form-data"> {% csrf_token %}
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title text-center">What did we miss?</h5>
+					<h5 class="modal-title text-center">Add New Event</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
