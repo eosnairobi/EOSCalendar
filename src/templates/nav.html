@@ -5,8 +5,9 @@
     " height="30" alt=""> </a>
     {% if not '/map-view' in request.get_full_path %}
     <a href="{% url 'map_view' %}" class="navbar-brand col-sm-3 col-md-2 mr-0">Map View</a>
+    <a href="#suggest" class="navbar-brand col-sm-3 col-md-2 mr-0" data-toggle="modal">Suggest Event</a>
     {% else %}
     <a href="{% url 'calendar_view' %}"class="navbar-brand col-sm-3 col-md-2 mr-0">Calendar View</a>
     {% endif %}
-    <a href="#suggest" class="navbar-brand col-sm-3 col-md-2 mr-0" data-toggle="modal">Suggest Event</a>
+    
 </nav>

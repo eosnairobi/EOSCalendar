@@ -19,7 +19,17 @@ def home(request):
 
 
 def map_view(request):
-    return render(request, 'map_view.html')
+    if request.method == 'POST':
+        form = SuggestedEventForm(request.POST or None, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            print('Saved')
+        else:
+            print(form.errors)
+
+    elif request.method == 'GET':
+        form = SuggestedEventForm()
+    return render(request, 'map_view.html',  {'form': form})
 
 
 def landing(request):
