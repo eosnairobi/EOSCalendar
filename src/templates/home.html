@@ -3,7 +3,7 @@
 
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>EOSCalendar | Alpha  </title>
+	<title>EOSEvents | Alpha Release  </title>
 	<script src='{% static "codebase/dhtmlxscheduler.js" %}' type="text/javascript" charset="utf-8"></script>
 	<link rel='STYLESHEET' type='text/css' href='{% static "codebase/dhtmlxscheduler_flat.css" %}'>
 
@@ -30,39 +30,7 @@
 			padding: 10px;
 			height: 100%;
 			overflow: hidden;
-		}			dhtmlx.message({
-			text: "<p>Keyboard shortcuts:</p>" +
-				"<b>Global</b>" +
-				"<ul>" +
-				"<li><b>Tab</b> - put focus on scheduler</li>" +
-				"<li><b>Alt + 1,2,3 ...</b> - switch between views</li>" +
-				"<li><b>Ctrl + Right/Left</b> - move to next/previous date</li>" +
-				"<li><b>Ctrl + Up/Down</b> - scroll data area</li>" +
-				"<li><b>e, shift + e</b> - select next/previous event</li>" +
-				"<li><b>Home</b> - show today</li>" +
-				"<li><b>Ctrl + Enter</b> - create new event</li>" +
-				"<li><b>Ctrl + C, Ctrl + X, Ctrl + V </b> - copy/cut/paste event</li>" +
-				"</ul>" +
-				"<b>Time Slot</b>" +
-				"<ul>" +
-				"<li><b>Up/Down/Right/Left</b> - navigate over slots</li>" +
-				"<li><b>Shift + Up/Down/Right/Left</b> - extend time slot</li>" +
-				"<li><b>Enter</b> - add new event at selected time</li>" +
-				"</ul>" +
-				"<b>Events</b>" +
-				"<ul>" +
-				"<li><b>Up/Down/Right/Left</b> - go to timeslot</li>" +
-				"<li><b>Space</b> - click</li>" +
-				"<li><b>Enter</b> - open lightbox</li>" +
-				"</ul>" +
-				"<b>Minicalendar</b>" +
-				"<ul>" +
-				"<li><b>Tab</b> - put focus on minicalendar</li>" +
-				"<li><b>Up/Down/Right/Left</b> - navigate between buttons/cells</li>" +
-				"<li><b>Enter</b> - click button/cell</li>" +
-				"</ul>",
-			expire: -1
-		});
+		}
 
 		.dhx_calendar_click {
 			/* background-color: #C2D5FC !important; */
