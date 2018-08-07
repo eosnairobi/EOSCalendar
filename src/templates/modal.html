@@ -1,0 +1,25 @@
+{% load static crispy_forms_tags %}
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="suggest" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<form id='question_form' method="POST" action="" enctype="multipart/form-data"> {% csrf_token %}
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-center">Add New Event</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body">
+
+					<div id="err"></div>
+
+					{{ form | crispy }}
+
+
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+					<input type="submit" class="btn btn-success" />
+				</div>
+		</form>
+		</div>
+	</div>

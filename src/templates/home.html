@@ -30,7 +30,39 @@
 			padding: 10px;
 			height: 100%;
 			overflow: hidden;
-		}
+		}			dhtmlx.message({
+			text: "<p>Keyboard shortcuts:</p>" +
+				"<b>Global</b>" +
+				"<ul>" +
+				"<li><b>Tab</b> - put focus on scheduler</li>" +
+				"<li><b>Alt + 1,2,3 ...</b> - switch between views</li>" +
+				"<li><b>Ctrl + Right/Left</b> - move to next/previous date</li>" +
+				"<li><b>Ctrl + Up/Down</b> - scroll data area</li>" +
+				"<li><b>e, shift + e</b> - select next/previous event</li>" +
+				"<li><b>Home</b> - show today</li>" +
+				"<li><b>Ctrl + Enter</b> - create new event</li>" +
+				"<li><b>Ctrl + C, Ctrl + X, Ctrl + V </b> - copy/cut/paste event</li>" +
+				"</ul>" +
+				"<b>Time Slot</b>" +
+				"<ul>" +
+				"<li><b>Up/Down/Right/Left</b> - navigate over slots</li>" +
+				"<li><b>Shift + Up/Down/Right/Left</b> - extend time slot</li>" +
+				"<li><b>Enter</b> - add new event at selected time</li>" +
+				"</ul>" +
+				"<b>Events</b>" +
+				"<ul>" +
+				"<li><b>Up/Down/Right/Left</b> - go to timeslot</li>" +
+				"<li><b>Space</b> - click</li>" +
+				"<li><b>Enter</b> - open lightbox</li>" +
+				"</ul>" +
+				"<b>Minicalendar</b>" +
+				"<ul>" +
+				"<li><b>Tab</b> - put focus on minicalendar</li>" +
+				"<li><b>Up/Down/Right/Left</b> - navigate between buttons/cells</li>" +
+				"<li><b>Enter</b> - click button/cell</li>" +
+				"</ul>",
+			expire: -1
+		});
 
 		.dhx_calendar_click {
 			/* background-color: #C2D5FC !important; */
@@ -41,39 +73,7 @@
 		function doOnLoad() {
 			$('.datetimeinput').datetimepicker();
 
-			dhtmlx.message({
-				text: "<p>Keyboard shortcuts:</p>" +
-					"<b>Global</b>" +
-					"<ul>" +
-					"<li><b>Tab</b> - put focus on scheduler</li>" +
-					"<li><b>Alt + 1,2,3 ...</b> - switch between views</li>" +
-					"<li><b>Ctrl + Right/Left</b> - move to next/previous date</li>" +
-					"<li><b>Ctrl + Up/Down</b> - scroll data area</li>" +
-					"<li><b>e, shift + e</b> - select next/previous event</li>" +
-					"<li><b>Home</b> - show today</li>" +
-					"<li><b>Ctrl + Enter</b> - create new event</li>" +
-					"<li><b>Ctrl + C, Ctrl + X, Ctrl + V </b> - copy/cut/paste event</li>" +
-					"</ul>" +
-					"<b>Time Slot</b>" +
-					"<ul>" +
-					"<li><b>Up/Down/Right/Left</b> - navigate over slots</li>" +
-					"<li><b>Shift + Up/Down/Right/Left</b> - extend time slot</li>" +
-					"<li><b>Enter</b> - add new event at selected time</li>" +
-					"</ul>" +
-					"<b>Events</b>" +
-					"<ul>" +
-					"<li><b>Up/Down/Right/Left</b> - go to timeslot</li>" +
-					"<li><b>Space</b> - click</li>" +
-					"<li><b>Enter</b> - open lightbox</li>" +
-					"</ul>" +
-					"<b>Minicalendar</b>" +
-					"<ul>" +
-					"<li><b>Tab</b> - put focus on minicalendar</li>" +
-					"<li><b>Up/Down/Right/Left</b> - navigate between buttons/cells</li>" +
-					"<li><b>Enter</b> - click button/cell</li>" +
-					"</ul>",
-				expire: -1
-			});
+
 
 
 			scheduler.config.first_hour = 6;
@@ -192,11 +192,7 @@
 
 
 <body onload="doOnLoad();">
-	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{% url 'landing' %}">EOSCalendar </a>
-		<a class="btn btn-primary btn-sm">ALPHA Release</a>
-		<a href="#suggest" data-toggle="modal" class="btn btn-outline-warning btn-xs">Suggest Event</a>
-	</nav>
+	{% include 'nav.html' %}
 	
 	<div style='float: left; padding:10px;'>
 		<div id="cal_here" style='width:250px;'></div>
@@ -219,27 +215,5 @@
 		<div class="dhx_cal_data">
 		</div>
 	</div>
-	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="suggest" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<form id='question_form' method="POST" action="" enctype="multipart/form-data"> {% csrf_token %}
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title text-center">Add New Event</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				</div>
-				<div class="modal-body">
-
-					<div id="err"></div>
-
-					{{ form | crispy }}
-
-
-				</div>
-				<div class="modal-footer">
-					<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-					<input type="submit" class="btn btn-success" />
-				</div>
-		</form>
-		</div>
-	</div>
+	{% include 'modal.html' %}
 </body>

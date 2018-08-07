@@ -28,11 +28,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{% url 'landing' %}">EOSCalendar </a>
-		<a class="btn btn-primary btn-sm">ALPHA Release</a>
-		<a href="#suggest" data-toggle="modal" class="btn btn-outline-warning btn-xs">Suggest Event</a>
-	</nav>
+ {% include 'nav.html'%}
+ {% include 'modal.html' %}
         <div id="map" class="mapping"></div>
    
 <script>
@@ -40,8 +37,8 @@
             // Asynchronously Load the map API 
             var script = document.createElement('script');
             //AIzaSyApZ6USTF7ZYFzMLSetXtX6ix7ZJbSBj6k  AIzaSyApZ6USTF7ZYFzMLSetXtX6ix7ZJbSBj6k
-           // https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap
-            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyApZ6USTF7ZYFzMLSetXtX6ix7ZJbSBj6k&callback=initialize";
+           // https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap AIzaSyB6ZWosNoRqD3fOo4tzxvFnaqLCPeJ6Zt0
+            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB6ZWosNoRqD3fOo4tzxvFnaqLCPeJ6Zt0&callback=initialize";
             document.body.appendChild(script);
         });
         
@@ -140,30 +137,39 @@
                 
             // Multiple Markers
             var markers = [
-                ['London Eye, London', 51.503454,-0.119562],
+                ['BlockchainLive, London', 51.503454,-0.119562],
                 ['Olympia, London', 51.4965,0.2107], 
-                ['Nairobi', 1.3281, 36.8666],
+                ['Howard University', 38.9227, 77.0194],
+               
             ];
                                 
             // Info Window Content
             var infoWindowContent = [
                 ['<div class="info_content">' +
-                '<h3>London Eye</h3>' +
-                '<p>The London Eye is a giant Ferris wheel situated on the banks of the River Thames. The entire structure is 135 metres (443 ft) tall and the wheel has a diameter of 120 metres (394 ft).</p>' +        '</div>'],
+                '<h3>BlockchainLive </h3>' +
+                '<p>The BlockchainLive serves to bring together the biggest blockchain innovators and investors with UK industry leaders, tech pioneers and blockchain newcomers.</p>' +        '</div>'],
                 ['<div class="info_content">' +
                 '<h3>Olympia</h3>' +
                 '<p>Bringing together the biggest blockchain innovators and investors with UK industry leaders, tech pioneers and blockchain newcomers.</p>' +
                 '</div>'],
                 ['<div class="info_content">' +
-                '<h3>Nairobi</h3>' +
-                '<p>Nairobi, yoooh!.</p>' +
-                '</div>'],
+                '<h3>EOSIO Hackathon, London</h3>' +
+                'The EOS Global Hackathon series is a first-of-its-kind event in the world of blockchain that serves Block.one’s goal of supporting a decentralized global community from the ground up.'+
+                '</div>']
 
             ];
                 
             // Display multiple markers on a map
             var infoWindow = new google.maps.InfoWindow(), marker, i;
-            
+            var image = {
+              url: '{% static "assets/images/map.jpg" %}',
+              // This marker is 20 pixels wide by 32 pixels high.
+              size: new google.maps.Size(20, 32),
+              // The origin for this image is (0, 0).
+              origin: new google.maps.Point(0, 0),
+              // The anchor for this image is the base of the flagpole at (0, 32).
+              anchor: new google.maps.Point(0, 32)
+            };
             // Loop through our array of markers & place each one on the map  
             for( i = 0; i < markers.length; i++ ) {
                 var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
@@ -171,6 +177,7 @@
                 marker = new google.maps.Marker({
                     position: position,
                     map: map,
+                    icon: image,
                     title: markers[i][0]
                 });
                 
@@ -188,7 +195,7 @@
         
             // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
             var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-                this.setZoom(4);
+                this.setZoom(3);
                 google.maps.event.removeListener(boundsListener);
             });
             
