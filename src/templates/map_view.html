@@ -28,8 +28,7 @@
 </head>
 
 <body>
- {% include 'nav.html'%}
- {% include 'modal.html' %}
+{% include 'nav.html' %}
         <div id="map" class="mapping"></div>
    
 <script>
@@ -37,8 +36,8 @@
             // Asynchronously Load the map API 
             var script = document.createElement('script');
             //AIzaSyApZ6USTF7ZYFzMLSetXtX6ix7ZJbSBj6k  AIzaSyApZ6USTF7ZYFzMLSetXtX6ix7ZJbSBj6k
-           // https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap AIzaSyB6ZWosNoRqD3fOo4tzxvFnaqLCPeJ6Zt0
-            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB6ZWosNoRqD3fOo4tzxvFnaqLCPeJ6Zt0&callback=initialize";
+           // https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap
+            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyApZ6USTF7ZYFzMLSetXtX6ix7ZJbSBj6k&callback=initialize";
             document.body.appendChild(script);
         });
         
@@ -137,39 +136,30 @@
                 
             // Multiple Markers
             var markers = [
-                ['BlockchainLive, London', 51.503454,-0.119562],
-                ['Olympia, London', 51.4965,0.2107], 
-                ['Howard University', 38.9227, 77.0194],
-               
-            ];
-                                
-            // Info Window Content
-            var infoWindowContent = [
-                ['<div class="info_content">' +
-                '<h3>BlockchainLive </h3>' +
-                '<p>The BlockchainLive serves to bring together the biggest blockchain innovators and investors with UK industry leaders, tech pioneers and blockchain newcomers.</p>' +        '</div>'],
-                ['<div class="info_content">' +
-                '<h3>Olympia</h3>' +
-                '<p>Bringing together the biggest blockchain innovators and investors with UK industry leaders, tech pioneers and blockchain newcomers.</p>' +
-                '</div>'],
-                ['<div class="info_content">' +
-                '<h3>EOSIO Hackathon, London</h3>' +
-                'The EOS Global Hackathon series is a first-of-its-kind event in the world of blockchain that serves Block.one’s goal of supporting a decentralized global community from the ground up.'+
-                '</div>']
+              ['BlockchainLive, London', 51.503454,-0.119562],
+              ['Olympia, London', 51.4965, 0.2107], 
+              ['Howard University', 38.9245128,-77.0204664],
+             
+          ];
+                              
+          // Info Window Content
+          var infoWindowContent = [
+              ['<div class="info_content">' +
+              '<h3>BlockchainLive </h3>' +
+              '<p>The BlockchainLive serves to bring together the biggest blockchain innovators and investors with UK industry leaders, tech pioneers and blockchain newcomers.</p>' +        '</div>'],
+              ['<div class="info_content">' +
+              '<h3>Olympia</h3>' +
+              '<p>Bringing together the biggest blockchain innovators and investors with UK industry leaders, tech pioneers and blockchain newcomers.</p>' +
+              '</div>'],
+              ['<div class="info_content">' +
+              '<h3>EOSIO Hackathon, London</h3>' +
+              'The EOS Global Hackathon series is a first-of-its-kind event in the world of blockchain that serves Block.one’s goal of supporting a decentralized global community from the ground up.'+
+              '</div>']
 
-            ];
-                
+          ];
             // Display multiple markers on a map
             var infoWindow = new google.maps.InfoWindow(), marker, i;
-            var image = {
-              url: '{% static "assets/images/map.jpg" %}',
-              // This marker is 20 pixels wide by 32 pixels high.
-              size: new google.maps.Size(20, 32),
-              // The origin for this image is (0, 0).
-              origin: new google.maps.Point(0, 0),
-              // The anchor for this image is the base of the flagpole at (0, 32).
-              anchor: new google.maps.Point(0, 32)
-            };
+            
             // Loop through our array of markers & place each one on the map  
             for( i = 0; i < markers.length; i++ ) {
                 var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
@@ -177,7 +167,6 @@
                 marker = new google.maps.Marker({
                     position: position,
                     map: map,
-                    icon: image,
                     title: markers[i][0]
                 });
                 
@@ -195,12 +184,10 @@
         
             // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
             var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-                this.setZoom(3);
+                this.setZoom(4);
                 google.maps.event.removeListener(boundsListener);
             });
             
         }
 </script>
 </body>
-
-</html>
