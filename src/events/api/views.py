@@ -1,11 +1,13 @@
-from rest_framework import viewsets
+from datetime import datetime
 
-from ..models import Event, SuggestedEvent
-from .serializers import EventModelSerializer
+from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from datetime import datetime 
+from ..models import Event, SuggestedEvent
+from .serializers import EventModelSerializer
+
+
 class EventModelViewSet(viewsets.ModelViewSet):
     serializer_class = EventModelSerializer
     queryset = Event.objects.all()
@@ -19,8 +21,8 @@ def events(request):
     for event in events:
         std = str(event.start_date)
         end = str(event.end_date)
-        response.append({'id': event.id, 'text': event.text,
-                         'start_date': std[:19], 'end_date': end[:19], 'section_id': event.section_id})
+        response.append({'id': event.id, 'text': event.text, 'description': event.description, 'image': event.image.url, 'venue': event.venue,
+                         'start_date': std[:19], 'end_date': end[:19], 'section_id': event.section_id, 'url':event.url_link})
 
     return Response(response)
 
@@ -38,7 +40,7 @@ def e(request):
     """
     start_date = data.get('start_date')
     print(datetime(start_date))
-    
+
     return Response('success')
 
 
@@ -49,7 +51,7 @@ def map_data(request):
     for event in events:
         std = str(event.start_date)
         end = str(event.end_date)
-        response.append({'id': event.id, 'text': event.text,
+        response.append({'id': event.id, 'text': event.text, 'description': event.description, 'image': event.image,
                          'start_date': std[:19], 'end_date': end[:19], 'section_id': event.section_id})
 
     return Response(response)

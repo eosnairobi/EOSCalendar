@@ -136,11 +136,11 @@
 					return "";
 
 				return '<div class="media">' +
-					'<img class="mr-3" style="height:100px;width:100px;" src="{% static 'img/eosio.jpg' %}" alt="Generic placeholder image">' +
+					'<img class="mr-3" style="height:100px;width:100px;" src="'+event.image+'" alt="Generic placeholder image">' +
 					'<div class="media-body">' +
-					'<h5 class="mt-0"><small>' + event.text + '<small></h5>' +
-					'<h6><i><small>Cras sit amet nibh libero, in gravida nulla. Nul <br>' +
-					'tempus viverra turpis. Fusce con</small></i></h6>' +
+					'<h5 class="mt-0"><small>' + event.text + ' - '+ event.venue + '<small></h5>' +
+					'<h6><i><small>'+ event.description +'<br>' +
+					'</small></i></h6><br>' + '<a class="btn btn-sm btn-block btn-outline-success" target="blank" href="'+event.url+'"/>View Event</a>'+
 					'</div></div>'
 				//		return '<div class="card"><img class="card-img-top" style="height:100px;width:520px;" src="{% static 'img/eosio.jpg' %}" alt="Card image cap"><div class="card-body"><h5 class="card-title">Card title</h5> <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p><p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p></div>  </div>'
 

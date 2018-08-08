@@ -15,6 +15,7 @@ class Event(models.Model):
     end_date = models.DateTimeField(default=timezone.now)
     section_id = models.PositiveIntegerField(default=1)
     image = models.ImageField(null=True)
+    url_link=models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.text
