@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{% url 'landing' %}">EOSEvents by 
-    <img src="{% static 'assets/images/logo.jpg' %}" width="60
+    <img src="{% static 'assets/images/white.png' %}" width="90
     " height="30" alt=""> </a>
     {% if not '/map-view' in request.get_full_path %}
     <a href="{% url 'map_view' %}" class="navbar-brand col-sm-3 col-md-2 mr-0">Map View</a>

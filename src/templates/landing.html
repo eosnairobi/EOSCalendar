@@ -108,6 +108,13 @@
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.parallax.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.slideanims.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.video.min.js' %}"></script>
+	<style>
+		img {
+			margin-top: 0.5em;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	</style>
 </head>
 
 <body>
@@ -116,11 +123,13 @@
 	<article class="content">
 		<!-- Add your site or application content here -->
 		<section class="header">
-			<a class="button" href="" style="float:left">EOSEvents</a>
+			<a class="button" href="" style="float:left">EOSEvents</a> 
+			<a style="float:left">By</a>
+			<img src="{% static 'assets/images/logo.jpg' %}" style="float:left" width="70" height="30" alt="">
 			<a class="button" href="{% url 'calendar_view' %}" style="float:left">Calendar View</a>
 			<a class="button" href="{% url 'map_view' %}" style="float:left">Map View</a>
-			<a class="button" href="https://t.me/eosnairobi" style="float:right" target="_blank" href="">Get In Touch <img src="{% static 'assets/images/logo.jpg' %}" width="60
-				" height="30" alt=""></a>
+			<a class="button" href="https://t.me/eosnairobi" style="float:right" target="_blank" href="">Get In Touch</a>
+			
 			<div class="clearfix"></div>
 		</section>
 	</article>
